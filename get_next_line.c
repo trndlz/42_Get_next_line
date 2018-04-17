@@ -6,7 +6,7 @@
 /*   By: tmervin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 10:45:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/04/17 15:42:45 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/04/17 15:50:39 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,6 @@ static t_list		*get_fd(const int fd, t_list **stock)
 	return (ret);
 }
 
-#include <stdio.h>
 char				*reader(const int fd, t_list *t)
 {
 	int		ret;
