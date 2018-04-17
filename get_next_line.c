@@ -6,75 +6,77 @@
 /*   By: tmervin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 10:45:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/04/16 20:45:52 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/04/17 15:42:45 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-int					get_endl_index(char *s)
+char				*cut_until(char *s, char c)
 {
-	int i;
+	char	*ret;
+	int		i;
+	int		l;
 
-	i = 0;
-	while (s[i])
-	{
-		if (s[i] == '\n')
-			return (i);
-		i++;
-	}
-	return (i);
+	if (!s)
+		return (NULL);
+	l = 0;
+	while (s[l] && s[l] != c)
+		l++;
+	if ((ret = (char*)malloc(sizeof(char) * (l + 1))) == NULL)
+		return (NULL);
+	i = -1;
+	while (++i < l)
+		ret[i] = s[i];
+	ret[i] = '\0';
+	return (ret);
 }
 
-static t_list		*get_fd(const int fd, t_list **tamp)
+static t_list		*get_fd(const int fd, t_list **stock)
 {
 	t_list *ret;
-	size_t sfd;
 
-	sfd = (size_t)fd;
-	ret = *tamp;
+	ret = *stock;
 	while (ret)
 	{
-		if (ret->content_size == sfd)
+		if ((int)ret->content_size == fd)
 			return (ret);
 		ret = ret->next;
 	}
 	if (!(ret = ft_lstnew("\0", fd)))
 		return (NULL);
-	ft_lstadd(tamp, ret);
+	ft_lstadd(stock, ret);
 	return (ret);
 }
 
-char				**reader(const int fd, char **line)
+#include <stdio.h>
+char				*reader(const int fd, t_list *t)
 {
 	int		ret;
 	char	*tmp;
+	char	*str;
 	char	b[BUFF_SIZE + 1];
 
+	str = t->content;
 	while ((ret = read(fd, &b, BUFF_SIZE)))
 	{
 		b[ret] = '\0';
-		tmp = *line;
-		*line = ft_strjoin(*line, b);
+		tmp = str;
+		str = ft_strjoin(str, b);
 		free(tmp);
-		if (ft_strchr(*line, '\n'))
+		if (ft_strchr(b, '\n'))
 			break ;
 	}
-	return (line);
+	return (str);
 }
 
-char				*tamp_cutter(char *tempo, char **line)
+char				*cut_after(char *tempo)
 {
-	char *tmp;
+	char *tmp2;
 
-	if (ft_strchr(*line, '\n'))
-	{
-		tmp = tempo;
-		tempo = ft_strchr(*line, '\n');
-		tempo++;
-		tempo = ft_strdup(tempo);
-		free(tmp);
-	}
+	tmp2 = ft_strchr(tempo, '\n');
+	if (tmp2)
+		tempo = ft_strdup(tmp2 + 1);
 	else
 		tempo = "\0";
 	return (tempo);
@@ -82,7 +84,7 @@ char				*tamp_cutter(char *tempo, char **line)
 
 int					get_next_line(const int fd, char **line)
 {
-	char			b[BUFF_SIZE + 1];
+	char			b[1];
 	char			*tmp;
 	static t_list	*stock = NULL;
 	t_list			*tamp;
@@ -91,21 +93,17 @@ int					get_next_line(const int fd, char **line)
 		return (-1);
 	if (!(*line = ft_strnew(1)))
 		return (-1);
-	reader(fd, line);
 	if (!(tamp = get_fd(fd, &stock)))
 		return (-1);
-	if (tamp->content)
-	{
-		tmp = *line;
-		*line = ft_strjoin(tamp->content, *line);
-		free(tmp);
-	}
+	tamp->content = reader(fd, tamp);
 	tmp = tamp->content;
 	if (!**line && !*tmp)
 		return (0);
-	tamp->content = tamp_cutter(tamp->content, line);
 	tmp = *line;
-	*line = ft_strsub(*line, 0, get_endl_index(*line));
+	*line = cut_until(tamp->content, '\n');
+	free(tmp);
+	tmp = tamp->content;
+	tamp->content = cut_after(tamp->content);
 	free(tmp);
 	return (1);
 }

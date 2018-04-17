@@ -6,17 +6,17 @@
 #    By: tmervin <marvin@42.fr>                     +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2018/04/03 14:12:58 by tmervin           #+#    #+#              #
-#    Updated: 2018/04/12 13:49:26 by tmervin          ###   ########.fr        #
+#    Updated: 2018/04/17 12:15:55 by tmervin          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC = gcc
+CC	= gcc
+
+FLAGS = -Wall -Werror -Wextra -I./includes
 
 NAME = libft.a
 
 LIB_NAME = libft.h
-
-FLAGS = -Wall -Werror -Wextra -I./includes
 
 SRC = ./ft_memset.c			\
       ./ft_bzero.c			\
