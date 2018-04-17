@@ -6,13 +6,13 @@
 /*   By: tmervin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 10:45:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/04/17 15:50:39 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/04/17 15:59:00 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "get_next_line.h"
 
-char				*cut_until(char *s, char c)
+char			*cut_until(char *s, char c)
 {
 	char	*ret;
 	int		i;
@@ -32,7 +32,7 @@ char				*cut_until(char *s, char c)
 	return (ret);
 }
 
-static t_list		*get_fd(const int fd, t_list **stock)
+static t_list	*get_fd(const int fd, t_list **stock)
 {
 	t_list *ret;
 
@@ -49,7 +49,7 @@ static t_list		*get_fd(const int fd, t_list **stock)
 	return (ret);
 }
 
-char				*reader(const int fd, t_list *t)
+char			*reader(const int fd, t_list *t)
 {
 	int		ret;
 	char	*tmp;
@@ -69,7 +69,7 @@ char				*reader(const int fd, t_list *t)
 	return (str);
 }
 
-char				*cut_after(char *tempo)
+char			*cut_after(char *tempo)
 {
 	char *tmp2;
 
@@ -81,7 +81,7 @@ char				*cut_after(char *tempo)
 	return (tempo);
 }
 
-int					get_next_line(const int fd, char **line)
+int				get_next_line(const int fd, char **line)
 {
 	char			b[1];
 	char			*tmp;
