@@ -6,7 +6,7 @@
 /*   By: tmervin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/12 11:51:52 by tmervin           #+#    #+#             */
-/*   Updated: 2018/04/17 15:50:13 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/04/17 16:14:28 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ int		main(int ac, char **av)
 	while ((get_next_line(fd1, &line1) == 1))
 	{
 		ft_putstr(line1);
+		free(line1);
 		ft_putchar('\n');
 	}
-	free(line1);
 	return (0);
 }
