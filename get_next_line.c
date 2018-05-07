@@ -6,7 +6,7 @@
 /*   By: tmervin <marvin@42.fr>                     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2018/04/11 10:45:13 by tmervin           #+#    #+#             */
-/*   Updated: 2018/04/17 15:59:00 by tmervin          ###   ########.fr       */
+/*   Updated: 2018/05/07 14:57:57 by tmervin          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ char			*cut_after(char *tempo)
 	if (tmp2)
 		tempo = ft_strdup(tmp2 + 1);
 	else
-		tempo = "\0";
+		tempo = ft_strdup("\0");
 	return (tempo);
 }
 
